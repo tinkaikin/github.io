@@ -47,6 +47,7 @@
         #btn button{
             border: none;
             font-size:0.42rem;
+            width: 100%;
             /* font-family:PingFang SC; */
             font-weight:bold;
             color:rgba(255,70,3,1);
@@ -90,7 +91,8 @@
     var u = navigator.userAgent;
     if(/MicroMessenger/gi.test(u)) {
        // 引导用户在浏览器中打开
-        alert('请在浏览器中打开');
+        // alert('请在浏览器中打开');
+        alert('点击右上角选择【在浏览器中】打开下载~~');
         return;
     }
     var d = new Date();
@@ -115,15 +117,15 @@
         }
     }else if(u.indexOf('iPhone') > -1){
         //IOS
-        if(openApp('ios--scheme')){  
-            openApp('ios--scheme');
+        if(openApp('RenWaiRenApp.Merchant.AppStore')){  
+            openApp('RenWaiRenApp.Merchant.AppStore');
         }else{
             var delay = setInterval(function(){
                 var d = new Date();
                 var t1 = d.getTime();
                 if( t1-t0<3000 && t1-t0>2000){
                     alert('请下载APP');
-                    window.location.href = "app下载地址";
+                    window.location.href = "https://apps.apple.com/cn/app/%E4%B9%B0%E6%9D%A1%E8%A1%97%E5%95%86%E5%AE%B6%E7%89%88/id1484441009";
                 }
                 if(t1-t0>=3000){
                     clearInterval(delay);
