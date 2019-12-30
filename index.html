@@ -160,8 +160,8 @@ function submitFn(){
         }
     }else if(u.indexOf('iPhone') > -1){
         //IOS
-        if(openApp('RenWaiRenApp.Merchant.AppStore')){  
-            openApp('RenWaiRenApp.Merchant.AppStore');
+        if(openApp('RenWaiRenApp.Merchant.AppStore://')){  
+            openApp('RenWaiRenApp.Merchant.AppStore://');
         }else{
             var delay = setInterval(function(){
                 var d = new Date();
