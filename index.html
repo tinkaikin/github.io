@@ -96,16 +96,16 @@
     document.getElementById('openApp').onclick = function (e) {
 
         if (navigator.userAgent.match(/(iPhone|iPod|iPad);?/i)) {
-            window.location.href = "wx809f03b2c35ba618://"; //ios app协议
+            window.location.href = "RenWaiRenApp.Merchant.AppStore://"; //ios app协议
             window.setTimeout(function () {
                 window.location.href = "https://apps.apple.com/cn/app/%E4%B9%B0%E6%9D%A1%E8%A1%97%E5%95%86%E5%AE%B6%E7%89%88/id1484441009";
-            }, 2000)
+            }, 3000)
         }
         if (navigator.userAgent.match(/android/i)) {
             window.location.href = "com.baidu.tieba://app"; //android app协议
             window.setTimeout(function () {
                 window.location.href = "https://****.apk"; //android 下载地址
-            }, 2000)
+            }, 3000)
         }
     };
 
