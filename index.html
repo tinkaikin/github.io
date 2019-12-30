@@ -96,17 +96,17 @@
 <script>
     document.getElementById('openApp').onclick = function (e) {
 
-        var u = navigator.userAgent;
-        if (/MicroMessenger/gi.test(u)) {
-            // 引导用户在浏览器中打开
-            alert('点击右上角选择【在浏览器中】打开下载~~');
-            return;
-        }
+        // var u = navigator.userAgent;
+        // if (/MicroMessenger/gi.test(u)) {
+        //     // 引导用户在浏览器中打开
+        //     alert('点击右上角选择【在浏览器中】打开下载~~');
+        //     return;
+        // }
 
         if (navigator.userAgent.match(/(iPhone|iPod|iPad);?/i)) {
-            window.location.href = "com.baidu.tieba://"; //ios app协议
+            window.location.href = "RenWaiRenApp.Merchant.AppStore://"; //ios app协议
             window.setTimeout(function () {
-                window.location.href = "https://itunes.apple.com/cn/app/id477927812";
+                window.location.href = "https://apps.apple.com/cn/app/%E4%B9%B0%E6%9D%A1%E8%A1%97%E5%95%86%E5%AE%B6%E7%89%88/id1484441009";
             }, 2000)
         }
         if (navigator.userAgent.match(/android/i)) {
