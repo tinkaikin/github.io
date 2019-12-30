@@ -160,8 +160,8 @@ function submitFn(){
         }
     }else if(u.indexOf('iPhone') > -1){
         //IOS
-        if(openApp('com.baidu.tieba:')){  
-            openApp('com.baidu.tieba:');
+        if(openApp('com.baidu.tieba://')){  
+            openApp('com.baidu.tieba://');
         }else{
             var delay = setInterval(function(){
                 var d = new Date();
