@@ -101,6 +101,8 @@ function openApp(){
     if(ua.match(/MicroMessenger/i) == 'micromessenger'){
     	window.location.href='downLoadForPhone';
         alert('去下载')
+        return
+
     }else{//非微信浏览器
     	if (navigator.userAgent.match(/(iPhone|iPod|iPad);?/i)) {
     	    var loadDateTime = new Date();
@@ -112,9 +114,10 @@ function openApp(){
     	        window.close();
     	    	}
     	    },2000);
-    	    window.location = "weixin://";
+    	    window.location = "com.baidu.tieba://";
     	  }else if (navigator.userAgent.match(/android/i)) {
     	    var state = null;
+
     	    try {
     	    	window.location = 'weixin://';
     	    	setTimeout(function(){
