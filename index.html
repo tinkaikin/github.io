@@ -4,122 +4,107 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>买条街APP下载</title>
+    <script src="./index.js"></script>
     <style>
-        * {
+        body {
             margin: 0;
             padding: 0;
+            width: 100%;
+            height: 100%;
+            position: relative;
         }
 
-        .h5 {
-            position: relative;
-            width: 100%;
-            height: 100vh;
+        .box {
+            width: 7.5rem;
+            height: 13.34rem;
+            overflow: hidden;
             background: url('./img/bj.png') no-repeat;
             background-size: 100% 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
-        .posa {
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
+        .box_min {
+            width: 100%;
+            margin-top: 2.93rem;
         }
 
-        .h5_log {
+        img {
+            display: block;
+        }
+
+        .box_log {
             width: 3.42rem;
             height: 3.42rem;
-            top: 2.93rem;
+            margin: 0 auto;
         }
 
-        .h5_title {
+        .box_t {
             width: 4.18rem;
-            height: 0.53rem;
-            top: 6.27rem;
+            height: .53rem;
+            margin: 0 auto;
+
         }
 
-        #btn {
-            bottom: 1.42rem;
-            width: 3.75rem;
-            height: 0.84rem;
-            text-align: center;
-            background: rgba(255, 70, 3, 0);
-            border: 0.02rem solid rgba(255, 70, 3, 1);
-            box-shadow: 0rem 0.05rem 0.1rem 0rem rgba(0, 0, 0, 0.11);
-            border-radius: 0.42rem;
-            line-height: 0.4rem;
+        .box_btn {
+            width: 3.94rem;
+            height: 1rem;
+            font-size: .42rem;
+            color: #FF4603;
+            background: url('./img/2.png') no-repeat;
+            background-size: contain;
+            background-position-y: .06rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 4.24rem;
+            /* margin-bottom: 1.24rem; */
         }
 
-        #btn button {
-            border: none;
-            font-size: 0.42rem;
-            width: 100%;
-            /* font-family:PingFang SC; */
-            font-weight: bold;
-            color: rgba(255, 70, 3, 1);
-            background-color: transparent;
-        }
         .mc {
             width: 100%;
             height: 100%;
-            background: url('./img/mc.png') no-repeat;
-            background-size: 100% 100%;
-            position: fixed;
+            position:absolute;
             top: 0;
             left: 0;
-
+            background: url('./img/mask.57fcc0bb.png') no-repeat center top;
+            background-color: rgba(0, 0, 0, .7);
+            background-size: 6.41rem 3.71rem;
         }
+
     </style>
-    <script>
-        (function () {
-            function w() {
-                /*document.documentElement.style.fontSize = document.documentElement.clientWidth / 7.5 + "px";*/
-                var r = document.documentElement; //根元素html
-                var a = r.clientWidth;
-                //按照750的设计稿换算
-                if (a > 750) {
-                    a = 750;
-                }
-                rem = a / 7.5;
-                r.style.fontSize = rem + "px";
-            }
-            var t;
-            w();
-            window.addEventListener("resize", function () {
-                clearTimeout(t);
-                t = setTimeout(w, 300);
-            }, false);
-        })();
-    </script>
 </head>
 
 <body>
-    <div class="h5">
-        <img class="h5_log posa" src="./img/logo.png" alt="">
-        <img class="h5_title posa" src="./img/zb.png" alt="">
-        <div id="btn" class="posa">
-            <a id="openApp" href="javascript:;"><button>立即下载APP</button></a>
+    <div class="box">
+        <div class="box_min">
+            <img class="box_log" src="./img/logo.png" alt="">
+            <img class="box_t" src="./img/zb.png" alt="">
         </div>
+        <div class="box_btn" id="openApp">立即下载APP</div>
     </div>
-    <div id="mc" class="">
-
-    </div>
+    <div id="mc" class="mc"></div>
 </body>
+
 <script>
+    
+    document.getElementById('mc').onclick = function(e) {
+        this.className = ''
+
+    }
+
 
     document.getElementById('openApp').onclick = function (e) {
-        //判断浏览器
+        //判断浏览器 (微信还是普通)
         var u = navigator.userAgent;
-        // var mc = document.getElementById("mc");
-        // mc.className = "mc";
         if (/MicroMessenger/gi.test(u)) {
-            // 引导用户在浏览器中打开
-            // alert('请在浏览器中打开');
             var mc = document.getElementById("mc");
-            mc.className = "mc";
-            // alert('点击右上角选择【在浏览器中】打开下载~~');
+            mc.className = "mc"; // alert('点击右上角选择【在浏览器中】打开下载~~');
             return;
         }
+
         var d = new Date();
         var t0 = d.getTime();
         if (u.indexOf('Android') > -1 || u.indexOf('Linux') > -1) {
