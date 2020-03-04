@@ -138,6 +138,8 @@
                     alert('请下载APP');
                     window.location.href =
                         "https://apps.apple.com/cn/app/%E4%B9%B0%E6%9D%A1%E8%A1%97%E5%95%86%E5%AE%B6%E7%89%88/id1484441009";
+                } else {
+                    clearInterval(delay);
                 }
                 if (t1 - t0 >= 3000) {
                     clearInterval(delay);
