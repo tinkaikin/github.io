@@ -89,6 +89,33 @@
     <div id="mc" class="mc"></div>
 </body>
 
+
+<!--  -->
+<script src="https://unpkg.com/callapp-lib@2.1.5/dist/index.umd.min.js"></script>
+<script>
+    const option = {
+      scheme: {
+        protocol: 'RenWaiRenApp.Merchant.AppStore',
+      },
+      
+      
+      appstore: 'https://apps.apple.com/cn/app/%E4%B9%B0%E6%9D%A1%E8%A1%97%E5%95%86%E5%AE%B6%E7%89%88/id1484441009',
+      yingyongbao: '//a.app.qq.com/o/simple.jsp?pkgname=com.youku.shortvideo',
+      fallback: 'https://dianliu.youku.com/service/download',
+      timeout: 2000,
+    };
+    const lib = new CallApp(option);
+    const callButton = document.querySelector('#openApp');
+
+    callButton.addEventListener('click', () => {
+      lib.open({
+        path: '',
+      });
+    });
+
+  </script>
+
+<!-- 
 <script>
     
     document.getElementById('mc').onclick = function(e) {
@@ -147,6 +174,6 @@
             }, 2500);
         }
     }
-</script>
+</script> -->
 
 </html>
