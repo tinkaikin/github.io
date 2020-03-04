@@ -64,6 +64,7 @@
         }
 
         .mc {
+            display: none;
             width: 100%;
             height: 100%;
             position:absolute;
@@ -85,13 +86,13 @@
         </div>
         <div class="box_btn" id="openApp">立即下载APP</div>
     </div>
-    <div id="mc" class=""></div>
+    <div id="mc" class="mc"></div>
 </body>
 
 <script>
     
     document.getElementById('mc').onclick = function(e) {
-        this.className = ''
+        this.style.display = 'none'
 
     }
 
@@ -100,8 +101,8 @@
         //判断浏览器 (微信还是普通)
         var u = navigator.userAgent;
         if (/MicroMessenger/gi.test(u)) {
-            var mc = document.getElementById("mc");
-            mc.className = "mc"; // alert('点击右上角选择【在浏览器中】打开下载~~');
+            document.getElementById("mc").style.display = 'block';
+            // alert('点击右上角选择【在浏览器中】打开下载~~');
             return;
         }
 
