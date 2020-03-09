@@ -17,7 +17,7 @@
 
         .box {
             width: 7.5rem;
-            height: 13.34rem;
+            height: 100%;
             overflow: hidden;
             background: url('./img/bj.png') no-repeat;
             background-size: 100% 100%;
@@ -91,44 +91,45 @@
 
 
 <!--  -->
-<script src="https://unpkg.com/callapp-lib@2.1.5/dist/index.umd.min.js"></script>
+<!-- <script src="https://unpkg.com/callapp-lib@2.1.5/dist/index.umd.min.js"></script> -->
 <script src="./util/getQueryVariable.js"></script>
+<script src="./jd.js"></script>
 <script>
-    var shopId = getQueryVariable('id')
-    var type = getQueryVariable('type')
-    const option = {
-      scheme: {
-        protocol: 'RenWaiRenApp.User.AppStore',
-      },
+    // var id = getQueryVariable('id')
+    // var type = getQueryVariable('type')
+    // const option = {
+    //   scheme: {
+    //     protocol: 'RenWaiRenApp.User.AppStore',
+    //   },
       
       
-      appstore: 'https://apps.apple.com/cn/app/%E4%B9%B0%E6%9D%A1%E8%A1%97/id1484463343',
-      yingyongbao: '//a.app.qq.com/o/simple.jsp?pkgname=com.youku.shortvideo',
-      fallback: 'https://tinkaikin.github.io/github.io/index',
-      timeout: 3000,
-    };
-    const lib = new CallApp(option);
-    const callButton = document.querySelector('#openApp');
+    //   appstore: 'https://apps.apple.com/cn/app/%E4%B9%B0%E6%9D%A1%E8%A1%97/id1484463343',
+    //   yingyongbao: '//a.app.qq.com/o/simple.jsp?pkgname=com.youku.shortvideo',
+    //   fallback: 'https://tinkaikin.github.io/github.io/index',
+    //   timeout: 3000,
+    // };
+    // const lib = new CallApp(option);
+    // const callButton = document.querySelector('#openApp');
 
-    callButton.addEventListener('click', () => {
-        var u = navigator.userAgent;
-            if (/MicroMessenger/gi.test(u)) {
-            document.getElementById("mc").style.display = 'block';
-            return;
-        }
+    // callButton.addEventListener('click', () => {
+    //     var u = navigator.userAgent;
+    //         if (/MicroMessenger/gi.test(u)) {
+    //         document.getElementById("mc").style.display = 'block';
+    //         return;
+    //     }
 
-        lib.open({
-            path: 'UVRUpDataShopModelHome',
-            param: {
-                shopId: shopId || '',
-                type: type || ''
-            }
-        });
-    });
+    //     lib.open({
+    //         path: 'UVRUpDataShopModelHome',
+    //         param: {
+    //             id: shopId || '',
+    //             type: type || ''
+    //         }
+    //     });
+    // });
 
-    document.getElementById('mc').onclick = function(e) {
-        this.style.display = 'none'
-    }
+    // document.getElementById('mc').onclick = function(e) {
+    //     this.style.display = 'none'
+    // }
 
   </script>
 </html>
