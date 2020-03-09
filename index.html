@@ -96,8 +96,6 @@
 <script>
     var shopId = getQueryVariable('id')
     var type = getQueryVariable('type')
-    alert(shopId)
-    alert(type)
     const option = {
       scheme: {
         protocol: 'RenWaiRenApp.User.AppStore',
@@ -122,8 +120,8 @@
         lib.open({
             path: 'UVRUpDataShopModelHome',
             param: {
-                shopId,
-                type
+                shopId: shopId || '',
+                type: type || ''
             }
         });
     });
