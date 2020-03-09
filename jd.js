@@ -135,9 +135,10 @@
         function F(L) {
             var url = {
                 downAppURl: "http://h5.m.jd.com/active/download/download.html?channel=jd-m",
+                // 跳转京东移动端
                 downAppIos: "http://union.m.jd.com/download/go.action?to=http%3A%2F%2Fitunes.apple.com%2Fcn%2Fapp%2Fid414245413&client=apple&unionId=12532&subunionId=m-top&key=e4dd45c0f480d8a08c4621b4fff5de74",
                 downWeixin: "http://a.app.qq.com/o/simple.jsp?pkgname=com.jingdong.app.mall&g_f=991850",
-                downIpad: "https://itunes.apple.com/cn/app/jing-dong-hd/id434374726?mt=8",
+                downIpad: "https://itunes.apple.com/cn/app/jing-dong-hd/id434374726?mt=8", //如果是ipad
                 inteneUrl: "openApp.jdMobile://360buy?type=1",
                 inteneUrlParams: null,
                 openAppBtnId: "",
@@ -167,7 +168,11 @@
             console.log(N, L)
             var R = h(N); //获取相对应的url
             console.log(R)
+            /*
+            openApp.jdMobile://360buy?type=1&params={"category":"jump","des":"productDetail","sourceType":"JSHOP_SOURCE_TYPE","sourceValue":"JSHOP_SOURCE_VALUE","m_param":null}
+            */
             var O = null;
+            debugger
             if (ifWeixin) { // 如果是微信端
                 var M = null;
                 console.log(j)
@@ -209,6 +214,7 @@
             } else {
                 document.querySelector("#" + iframe).src = R // 将iframe增加src
             }
+            
             var P = Date.now();
             setTimeout(function() {
                 if (L) {
