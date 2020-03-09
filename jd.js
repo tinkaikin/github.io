@@ -66,8 +66,10 @@
             // 微信操作
         if (ifWeixin) { // if navigitor is weixin 
             if (window.WeixinJSBridge && WeixinJSBridge.invoke) {
+                console.log('可以直接调用~~~~')
                 r()
             } else {
+                console.log('监听~~~~~!')
                 document.addEventListener("WeixinJSBridgeReady", r, !1)
             }
         }
@@ -86,11 +88,16 @@
             if (!window.$) {
                 window.$ = Hquery = selector
             } else {
+
                 Hquery = window.$ 
             }
         }
+
+        //在你浏览其他窗口页面、或是浏览器最小化、又或是点击了其他程序等等，都算是浏览器窗口失去焦点，那么 window.onblur 事件就会触发。
+        // 清除定时器的
         window.onblur = function() {
             for (var L = 0; L < g.length; L++) {
+                console.log(g.length)
                 clearTimeout(g[L])
             }
         };
@@ -156,10 +163,14 @@
         }
             // 敲黑板 重点内容。看京东是怎么解决兼容问题的。
         function openApp(N, L) { // openApp
+            // L 没东西
+            console.log(N, L)
             var R = h(N); //获取相对应的url
+            console.log(R)
             var O = null;
             if (ifWeixin) { // 如果是微信端
                 var M = null;
+                console.log(j)
                 if (j) {
                     M = R
                 } else {
@@ -281,6 +292,7 @@
         }
 
         function n(L) {
+            // 这个做什么的> 没有 poenAppBtnId 不走了
             if (L.openAppBtnId) {
                 B[L.openAppBtnId] = L;
                 G(L.openAppBtnId, L.openAppEventId);
@@ -371,13 +383,19 @@
         }
 
         function C(L) {
-            var M = F(L);
+            // L参数是配置项
+            console.log('downloadAppPlugIn触发')
+            var M = F(L); // 这个有返回值 返回url
+            console.log(M)
             n(M);
             D(M)
         }
-        Hquery.downloadAppPlugIn = C;
+        // Hquery 是个空对象--- 给这里面添加2个方法  
+        console.log(window)
+        Hquery.downloadAppPlugIn = C; // 下载应用商店下载app
         Hquery.downloadAppPlugInOpenApp = function(L) {
-            var M = F(L);
+            var M = F(L); 
+            // 打开app
             openApp(M);
             
         }
