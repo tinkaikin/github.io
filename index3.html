@@ -94,15 +94,16 @@
 <script src="https://unpkg.com/callapp-lib@2.1.5/dist/index.umd.min.js"></script>
 <script src="./util/getQueryVariable.js"></script>
 <script>
-    var shopId = getQueryVariable('id')
+    var id = getQueryVariable('id')
     var type = getQueryVariable('type')
+    console.log(id, type)
     const option = {
       scheme: {
-        protocol: 'RenWaiRenApp.User.AppStore',
+        protocol: 'RenWaiRenApp.Merchant.AppStore',
       },
       
       
-      appstore: 'https://apps.apple.com/cn/app/%E4%B9%B0%E6%9D%A1%E8%A1%97/id1484463343',
+      appstore: 'https://apps.apple.com/cn/app/%E4%B9%B0%E6%9D%A1%E8%A1%97%E5%95%86%E5%AE%B6%E7%89%88/id1484441009',
       yingyongbao: '//a.app.qq.com/o/simple.jsp?pkgname=com.youku.shortvideo',
       fallback: 'https://tinkaikin.github.io/github.io/index',
       timeout: 3000,
@@ -118,11 +119,7 @@
         }
 
         lib.open({
-            path: 'UVRUpDataShopModelHome',
-            param: {
-                shopId,
-                type
-            }
+            path: '',
         });
     });
 
