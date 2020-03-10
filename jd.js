@@ -172,7 +172,6 @@
             openApp.jdMobile://360buy?type=1&params={"category":"jump","des":"productDetail","sourceType":"JSHOP_SOURCE_TYPE","sourceValue":"JSHOP_SOURCE_VALUE","m_param":null}
             */
             var O = null;
-            debugger
             if (ifWeixin) { // 如果是微信端
                 var M = null;
                 console.log(j)
