@@ -105,6 +105,8 @@
     const ifweixin = /MicroMessenger/gi.test(u)
     const mc = document.getElementById("mc")
     const callButton = document.getElementById('openApp');
+
+    let {id, type} = getParams()
     
     const option = {
         scheme: {
@@ -113,7 +115,7 @@
 
         appstore: 'https://apps.apple.com/cn/app/%E4%B9%B0%E6%9D%A1%E8%A1%97/id1484463343',
         yingyongbao: '//a.app.qq.com/o/simple.jsp?pkgname=com.youku.shortvideo',
-        fallback: 'https://tinkaikin.github.io/github.io/index',
+        fallback: window.location.href,
         timeout: 3500,
     };
     const lib = new CallApp(option);
@@ -122,7 +124,9 @@
     function open() {
         lib.open({
             path: 'UVRUpDataShopModelHome',
-            param: getParams()
+            param: {
+                id, type
+            }
         });
     }
     
@@ -130,12 +134,7 @@
 
     window.onload = function () {
         if (ifweixin) {
-            var isok = confirm("是否离开微信,去下载app？")
-            if (isok) {
-                open()
-            } else {
-                mc.style.display = 'block';
-            }
+            mc.style.display = 'block';
         } else {
             lib && open()
         }
