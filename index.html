@@ -99,45 +99,187 @@
 <!--  -->
 <script src="https://unpkg.com/callapp-lib@2.1.5/dist/index.umd.min.js"></script>
 <script src="./util/getQueryVariable.js"></script>
-<script src="./util//openApp.js"></script>
-<!-- <script>
+<script>
 
     const u = navigator.userAgent;
     const ifweixin = /MicroMessenger/gi.test(u)
     const mc = document.getElementById("mc")
     const callButton = document.getElementById('openApp');
 
-    let {id, type} = getParams()
-    
-    const option = {
-        scheme: {
-            protocol: 'RenWaiRenApp.User.AppStore',
-        },
+    var issafariBrowser = /Safari/.test(navigator.userAgent) && !/Chrome/.test(navigator.userAgent);
 
-        appstore: 'https://apps.apple.com/cn/app/%E4%B9%B0%E6%9D%A1%E8%A1%97/id1484463343',
-        yingyongbao: '//a.app.qq.com/o/simple.jsp?pkgname=com.youku.shortvideo',
-        fallback: window.location.href,
-        timeout: 3500,
+    let abc = null
+
+    let {id, type, isOne} = getParams()
+
+    abc = isOne
+    
+    // const option = {
+    //     scheme: {
+    //         protocol: 'RenWaiRenApp.User.AppStore',
+    //     },
+
+    //     appstore: 'https://apps.apple.com/cn/app/%E4%B9%B0%E6%9D%A1%E8%A1%97/id1484463343',
+    //     yingyongbao: '//a.app.qq.com/o/simple.jsp?pkgname=com.youku.shortvideo',
+    //     fallback: window.location.href,
+    //     timeout: 2000,
+    // };
+
+    const option = {
+      scheme: {
+        protocol: 'RenWaiRenApp.User.AppStore',
+      },
+    //   outChain: {
+    //     protocol: 'ykshortvideo',
+    //     path: 'temporary',
+    //     key: 'url',
+    //   },
+    // 安卓的原生谷歌浏览器自从 chrome25 版本开始对于唤端功能做了一些变化，URL Scheme 无法再启动Android应用。
+    //   intent: {
+    //     package: 'com.youku.shortvideo',
+    //     scheme: 'ykshortvideo',
+    //   },
+    // Universal Link 是苹果在 WWDC2015 上为 iOS9 引入的新功能，通过传统的 HTTP 链接即可打开 APP。如果用户未安装 APP，则会跳转到该链接所对应的页面。
+    //   universal: {
+    //     host: 'flash-link.youku.com',
+    //     pathKey: 'action',
+    //   },
+      appstore:  'https://apps.apple.com/cn/app/%E4%B9%B0%E6%9D%A1%E8%A1%97/id1484463343',
+      yingyongbao: '//a.app.qq.com/o/simple.jsp?pkgname=com.youku.shortvideo',
+      fallback: '',
+      timeout: !issafariBrowser?2000 : 0,
     };
+
     const lib = new CallApp(option);
 
     callButton.addEventListener('click', open);
     function open() {
-        lib.open({
-            path: 'UVRUpDataShopModelHome',
-            param: {
-                id, type
-            }
-        });
+
+        
+        if(ifweixin){
+            window.location.href ='https://apps.apple.com/cn/app/%E4%B9%B0%E6%9D%A1%E8%A1%97/id1484463343'
+        }
+
+        if(issafariBrowser){
+            lib.open({
+                path: 'UVRUpDataShopModelHome',
+                param: {
+                    id, type
+                },
+                callback(){
+                   
+                    if(window.location.href.indexOf('?') !== -1){
+                        if(window.location.href.indexOf('isOne=ok') !== -1){
+                            window.location.href = window.location.href
+                        } else {
+                            window.location.href = window.location.href + '&isOne=ok'
+                        }
+                    } else {
+                        window.location.href = window.location.href + '?isOne=ok'
+                    }
+
+                }
+            });
+        }
+        
     }
     
     mc.addEventListener('click',()=>{ mc.style.display = 'none' })
 
     window.onload = function () {
+        
         if (ifweixin) {
             mc.style.display = 'block';
         }
+
+        if(isOne === 'ok'){
+            const visibilityChangeProperty = getVisibilityChangeProperty();
+            setTimeout(()=>{
+                window.history.go(-1)
+            },1550)
+            let timer = setTimeout(()=>{
+                const hidden = isPageHidden();  //判断页面是否隐藏（进入后台）
+                if (!hidden) {  //没有进入后端，说明唤起失败，唤起失败，就执行失败的函数
+                    window.location.href ='https://apps.apple.com/cn/app/%E4%B9%B0%E6%9D%A1%E8%A1%97/id1484463343'
+                }
+            }, 1500)
+
+            if (visibilityChangeProperty) {
+                document.addEventListener(visibilityChangeProperty, () => {
+                clearTimeout(timer);
+                });
+        
+                return;
+            }
+        
+            window.addEventListener('pagehide', () => { //页面关闭时 清除定时器
+                clearTimeout(timer);
+            });
+        }
+
     }
-</script> -->
+
+
+    // ===================
+    function checkOpen(failCallback, timeout=2000) {
+      const visibilityChangeProperty = getVisibilityChangeProperty();
+      const timer = setTimeout(() => {
+        const hidden = isPageHidden();  //判断页面是否隐藏（进入后台）
+        if (!hidden) {  //没有进入后端，说明唤起失败，唤起失败，就执行失败的函数
+            failCallback();
+        }
+      }, timeout);
+ 
+      if (visibilityChangeProperty) {
+        document.addEventListener(visibilityChangeProperty, () => {
+          clearTimeout(timer);
+        });
+ 
+        return;
+      }
+ 
+      window.addEventListener('pagehide', () => { //页面关闭时 清除定时器
+        clearTimeout(timer);
+      });
+    }
+    /**
+     * 获取判断页面 显示|隐藏 状态改变的属性，webkitvisibilitychange/mozvisibilitychange/msvisibilitychange/ovisibilitychange/visibilitychange文档的可见性改变时触发
+     */
+    function getVisibilityChangeProperty() {
+      const prefix = getPagePropertyPrefix();
+      if (prefix === false) return false;
+ 
+      return `${prefix}visibilitychange`;
+    }
+ 
+    /**
+     * 获取页面隐藏属性的前缀
+     * 如果页面支持 hidden 属性，返回 '' 就行
+     * 如果不支持，各个浏览器对 hidden 属性，有自己的实现，不同浏览器不同前缀，遍历看支持哪个
+     */
+    function getPagePropertyPrefix() {
+      const prefixes = ['webkit', 'moz', 'ms', 'o'];
+      let correctPrefix;
+      if ('hidden' in document) return '';
+      prefixes.forEach((prefix) => {
+        if (`${prefix}Hidden` in document) {
+          correctPrefix = prefix;
+        }
+      });
+ 
+      return correctPrefix || false;  //返回结果是'webkit', 'moz', 'ms', 'o' ,false
+    }
+    /**
+     * 判断页面是否隐藏（进入后台）
+     */
+    function isPageHidden() {
+      const prefix = getPagePropertyPrefix();
+      if (prefix === false) return false;
+ 
+      const hiddenProperty = prefix ? `${prefix}Hidden` : 'hidden';
+      return document[hiddenProperty];  //返回结果是document.hidden，document.mozHidden，document.msHidden， document.webkitHidden，document.oHidden,是判断页面是否隐藏（进入后台）
+    }
+
+</script>
 
 </html>

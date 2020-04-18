@@ -1,4 +1,5 @@
     let {id, type} = getParams()
+    console.log(id)
     
     let iosOpenUrl='RenWaiRenApp.User.AppStore://UVRUpDataShopModelHome?id=' + id;
     let androidOpenUrl='';
@@ -18,51 +19,59 @@
     // ios 上很多 app 都包含 safari 标识，但它们都是以自己的 app 标识开头，而不是 Mozilla
     const isSafari = /safari\/([\d.]+)$/i.test(ua) && isIos && ua.indexOf('Crios') < 0 && ua.indexOf('Mozilla') === 0;
  
- 
-    const wechatVersion = navigator.appVersion.match(/micromessenger\/(\d+\.\d+\.\d+)/i)[1]; //获取 微信 版本号
- 
+    
+    const wechatVersion = navigator.appVersion.match(/micromessenger\/(\d+\.\d+\.\d+)/i)[1]//获取 微信 版本号
+    
     let iosVersion = navigator.appVersion.match(/OS (\d+)_(\d+)_?(\d+)?/);  //获取 ios 大版本号
+
+
     iosVersion=parseInt(iosVersion[1], 10);
- 
-    if(isIos){  //iOS设备
-      // 近期ios版本qq禁止了scheme和universalLink唤起app，安卓不受影响 - 18年12月23日
-      // ios qq浏览器禁止了scheme和universalLink - 2019年5月1日
-      // ios 微信自 7.0.5 版本放开了 Universal Link 的限制
-      if ((isWechat && wechatVersion < '7.0.5') || isQQ || isQQBrowser) {//微信且微信的版本小于7.0.5，或者是qq打开，或者是qq浏览器打卡
-        window.top.location.href = iosOpenUrl;
-      } else if (iosVersion < 9) { //ios9版本以下
-        const iframe = document.createElement('iframe');
-        iframe.frameborder = '0';
-        iframe.src = iosOpenUrl;
-        iframe.style.cssText = 'display:none;border:0;width:0;height:0;';
-        document.body.appendChild(iframe);
-      } else {
-        window.top.location.href = iosOpenUrl;
-      }
-    }else { //android设备
-      if(isWechat){ //android的微信
-        window.top.location.href = androidOpenUrl;
-      }else if(isOriginalChrome){ //android的原生浏览器
-        if (typeof intent !== 'undefined') {  //安卓原生谷歌浏览器必须传递 Intent 协议地址，才能唤起 APP
-          window.top.location.href = androidOpenUrl;
-        } else {  // scheme 在 andriod chrome 25+ 版本上必须手势触发
-          const tagA = document.createElement('a');
-          tagA.setAttribute('href', androidOpenUrl);
-          tagA.style.display = 'none';
-          document.body.appendChild(tagA);
-          tagA.click();  
+
+    function open(){
+      if(isIos){  //iOS设备
+        // 近期ios版本qq禁止了scheme和universalLink唤起app，安卓不受影响 - 18年12月23日
+        // ios qq浏览器禁止了scheme和universalLink - 2019年5月1日
+        // ios 微信自 7.0.5 版本放开了 Universal Link 的限制
+        if ((isWechat && wechatVersion < '7.0.5') || isQQ || isQQBrowser) {//微信且微信的版本小于7.0.5，或者是qq打开，或者是qq浏览器打卡
+          window.top.location.href = iosOpenUrl;
+        } else if (iosVersion < 9) { //ios9版本以下
+          const iframe = document.createElement('iframe');
+          iframe.frameborder = '0';
+          iframe.src = iosOpenUrl;
+          iframe.style.cssText = 'display:none;border:0;width:0;height:0;';
+          document.body.appendChild(iframe);
+        } else {
+          window.top.location.href = iosOpenUrl;
         }
-      }else{  //android设备其他应用
-        const iframe = document.createElement('iframe');
-        iframe.frameborder = '0';
-        iframe.src = androidOpenUrl;
-        iframe.style.cssText = 'display:none;border:0;width:0;height:0;';
-        document.body.appendChild(iframe);
+      }else { //android设备
+        if(isWechat){ //android的微信
+          window.top.location.href = androidOpenUrl;
+        }else if(isOriginalChrome){ //android的原生浏览器
+          if (typeof intent !== 'undefined') {  //安卓原生谷歌浏览器必须传递 Intent 协议地址，才能唤起 APP
+            window.top.location.href = androidOpenUrl;
+          } else {  // scheme 在 andriod chrome 25+ 版本上必须手势触发
+            const tagA = document.createElement('a');
+            tagA.setAttribute('href', androidOpenUrl);
+            tagA.style.display = 'none';
+            document.body.appendChild(tagA);
+            tagA.click();  
+          }
+        }else{  //android设备其他应用
+          const iframe = document.createElement('iframe');
+          iframe.frameborder = '0';
+          iframe.src = androidOpenUrl;
+          iframe.style.cssText = 'display:none;border:0;width:0;height:0;';
+          document.body.appendChild(iframe);
+        }
       }
     }
+ 
     
  
+    console.log(1234)
+
     document.getElementById('openApp').addEventListener("click",()=>{
+      open()
       checkOpen(()=>{
         if(isIos){
           window.top.location.href = iosDownUrl;
