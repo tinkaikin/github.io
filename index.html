@@ -108,42 +108,15 @@
 
     var issafariBrowser = /Safari/.test(navigator.userAgent) && !/Chrome/.test(navigator.userAgent);
 
-    let abc = null
 
-    let {id, type, isOne} = getParams()
+    let {id, type} = getParams()
 
-    abc = isOne
     
-    // const option = {
-    //     scheme: {
-    //         protocol: 'RenWaiRenApp.User.AppStore',
-    //     },
-
-    //     appstore: 'https://apps.apple.com/cn/app/%E4%B9%B0%E6%9D%A1%E8%A1%97/id1484463343',
-    //     yingyongbao: '//a.app.qq.com/o/simple.jsp?pkgname=com.youku.shortvideo',
-    //     fallback: window.location.href,
-    //     timeout: 2000,
-    // };
-
     const option = {
       scheme: {
         protocol: 'RenWaiRenApp.User.AppStore',
       },
-    //   outChain: {
-    //     protocol: 'ykshortvideo',
-    //     path: 'temporary',
-    //     key: 'url',
-    //   },
-    // 安卓的原生谷歌浏览器自从 chrome25 版本开始对于唤端功能做了一些变化，URL Scheme 无法再启动Android应用。
-    //   intent: {
-    //     package: 'com.youku.shortvideo',
-    //     scheme: 'ykshortvideo',
-    //   },
-    // Universal Link 是苹果在 WWDC2015 上为 iOS9 引入的新功能，通过传统的 HTTP 链接即可打开 APP。如果用户未安装 APP，则会跳转到该链接所对应的页面。
-    //   universal: {
-    //     host: 'flash-link.youku.com',
-    //     pathKey: 'action',
-    //   },
+    
       appstore:  'https://apps.apple.com/cn/app/%E4%B9%B0%E6%9D%A1%E8%A1%97/id1484463343',
       yingyongbao: '//a.app.qq.com/o/simple.jsp?pkgname=com.youku.shortvideo',
       fallback: '',
@@ -154,10 +127,10 @@
 
     callButton.addEventListener('click', open);
     function open() {
-
         
         if(ifweixin){
             window.location.href ='https://apps.apple.com/cn/app/%E4%B9%B0%E6%9D%A1%E8%A1%97/id1484463343'
+            return
         }
 
         if(issafariBrowser){
@@ -167,17 +140,18 @@
                     id, type
                 },
                 callback(){
-                   
-                    if(window.location.href.indexOf('?') !== -1){
-                        if(window.location.href.indexOf('isOne=ok') !== -1){
-                            window.location.href = window.location.href
-                        } else {
-                            window.location.href = window.location.href + '&isOne=ok'
-                        }
-                    } else {
-                        window.location.href = window.location.href + '?isOne=ok'
-                    }
-
+                    window.location.hash = "#mao"
+                    window.location.reload()
+                }
+            });
+        } else {
+            lib.open({
+                path: 'UVRUpDataShopModelHome',
+                param: {
+                    id, type
+                },
+                callback(){
+                    window.location.href ='https://apps.apple.com/cn/app/%E4%B9%B0%E6%9D%A1%E8%A1%97/id1484463343'
                 }
             });
         }
@@ -192,29 +166,33 @@
             mc.style.display = 'block';
         }
 
-        if(isOne === 'ok'){
+        if(location.hash){
             const visibilityChangeProperty = getVisibilityChangeProperty();
             setTimeout(()=>{
                 window.history.go(-1)
             },1550)
-            let timer = setTimeout(()=>{
-                const hidden = isPageHidden();  //判断页面是否隐藏（进入后台）
-                if (!hidden) {  //没有进入后端，说明唤起失败，唤起失败，就执行失败的函数
-                    window.location.href ='https://apps.apple.com/cn/app/%E4%B9%B0%E6%9D%A1%E8%A1%97/id1484463343'
-                }
-            }, 1500)
 
-            if (visibilityChangeProperty) {
-                document.addEventListener(visibilityChangeProperty, () => {
-                clearTimeout(timer);
-                });
+            checkOpen(()=>{
+                window.location.href ='https://apps.apple.com/cn/app/%E4%B9%B0%E6%9D%A1%E8%A1%97/id1484463343'
+            },1500)
+            // let timer = setTimeout(()=>{
+            //     const hidden = isPageHidden();  //判断页面是否隐藏（进入后台）
+            //     if (!hidden) {  //没有进入后端，说明唤起失败，唤起失败，就执行失败的函数
+            //         window.location.href ='https://apps.apple.com/cn/app/%E4%B9%B0%E6%9D%A1%E8%A1%97/id1484463343'
+            //     }
+            // }, 1500)
+
+            // if (visibilityChangeProperty) {
+            //     document.addEventListener(visibilityChangeProperty, () => {
+            //     clearTimeout(timer);
+            //     });
         
-                return;
-            }
+            //     return;
+            // }
         
-            window.addEventListener('pagehide', () => { //页面关闭时 清除定时器
-                clearTimeout(timer);
-            });
+            // window.addEventListener('pagehide', () => { //页面关闭时 清除定时器
+            //     clearTimeout(timer);
+            // });
         }
 
     }
@@ -279,6 +257,8 @@
       const hiddenProperty = prefix ? `${prefix}Hidden` : 'hidden';
       return document[hiddenProperty];  //返回结果是document.hidden，document.mozHidden，document.msHidden， document.webkitHidden，document.oHidden,是判断页面是否隐藏（进入后台）
     }
+
+
 
 </script>
 
