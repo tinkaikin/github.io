@@ -6,7 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="screen-orientation" content="portrait">
     <title>买条街APP下载</title>
-    <script src="./util/index.js"></script>
+    <!-- <script src="./util/index.js"></script> -->
+    <script src="./util/4-20.js"></script>
+
+
+    
     <style>
         body {
             margin: 0;
@@ -98,8 +102,9 @@
 
 <!--  -->
 <script src="https://unpkg.com/callapp-lib@2.1.5/dist/index.umd.min.js"></script>
-<script src="./util/getQueryVariable.js"></script>
+<!-- <script src="./util/getQueryVariable.js"></script> -->
 <script>
+    // console.log(checkOpen)
 
     const u = navigator.userAgent;
     const ifweixin = /MicroMessenger/gi.test(u)
@@ -161,7 +166,7 @@
     mc.addEventListener('click',()=>{ mc.style.display = 'none' })
 
     window.onload = function () {
-        
+        computeRem()
         if (ifweixin) {
             mc.style.display = 'block';
         }
@@ -175,24 +180,7 @@
             checkOpen(()=>{
                 window.location.href ='https://apps.apple.com/cn/app/%E4%B9%B0%E6%9D%A1%E8%A1%97/id1484463343'
             },1500)
-            // let timer = setTimeout(()=>{
-            //     const hidden = isPageHidden();  //判断页面是否隐藏（进入后台）
-            //     if (!hidden) {  //没有进入后端，说明唤起失败，唤起失败，就执行失败的函数
-            //         window.location.href ='https://apps.apple.com/cn/app/%E4%B9%B0%E6%9D%A1%E8%A1%97/id1484463343'
-            //     }
-            // }, 1500)
-
-            // if (visibilityChangeProperty) {
-            //     document.addEventListener(visibilityChangeProperty, () => {
-            //     clearTimeout(timer);
-            //     });
-        
-            //     return;
-            // }
-        
-            // window.addEventListener('pagehide', () => { //页面关闭时 清除定时器
-            //     clearTimeout(timer);
-            // });
+           
         }
 
     }
